@@ -1,0 +1,15 @@
+-- Функция для выполнения SQL-запросов
+CREATE OR REPLACE FUNCTION exec_sql(sql TEXT)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  EXECUTE sql;
+  RETURN TRUE;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE NOTICE 'Ошибка при выполнении SQL: %', SQLERRM;
+    RETURN FALSE;
+END;
+$$;
